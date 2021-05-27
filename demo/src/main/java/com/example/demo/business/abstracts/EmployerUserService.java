@@ -1,0 +1,13 @@
+package com.example.demo.business.abstracts;
+
+import java.util.List;
+
+import com.example.demo.core.utilities.results.DataResult;
+import com.example.demo.core.utilities.results.Result;
+import com.example.demo.entities.concretes.EmployerUser;
+
+public interface EmployerUserService {
+	Result add(EmployerUser user);
+	DataResult<List<EmployerUser>> getAll();
+
+}
