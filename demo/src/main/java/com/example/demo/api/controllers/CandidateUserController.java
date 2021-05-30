@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.business.abstracts.CandidateUserService;
@@ -30,5 +31,8 @@ public class CandidateUserController {
 	public Result add(@RequestBody CandidateUser user) {
 		return this.candidateUserService.add(user);
 	}
-	
+	@GetMapping("/getByIdentityNumber")
+	public DataResult<CandidateUser> getByIdentityNumber(@RequestParam String identityNumber){
+		return this.candidateUserService.getByIdentityNumber(identityNumber);
+	}
 }

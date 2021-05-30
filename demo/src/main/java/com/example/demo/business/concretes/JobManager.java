@@ -1,8 +1,11 @@
 package com.example.demo.business.concretes;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.business.abstracts.JobService;
@@ -13,6 +16,7 @@ import com.example.demo.core.utilities.results.SuccessDataResult;
 import com.example.demo.core.utilities.results.SuccessResult;
 import com.example.demo.dataAccess.abstracts.JobDao;
 import com.example.demo.entities.concretes.Job;
+import com.example.demo.entities.concretes.JobList;
 @Service
 public class JobManager implements JobService{
 	private JobDao jobDao;
@@ -24,9 +28,11 @@ public class JobManager implements JobService{
 	}
 
 	@Override
-	public DataResult<List<Job>> getAll() {
-		// TODO Auto-generated method stub
-		return new SuccessDataResult<List<Job>>(this.jobDao.findAll());
+	public SuccessDataResult<List<JobList>> getAll() {
+		List<Job> job = this.jobDao.findAll();
+		
+		
+		return new SuccessDataResult<List<JobList>>(jobResult(job),"Firmaya ait ilanlar listelendi");
 	}
 
 	@Override
@@ -40,6 +46,43 @@ public class JobManager implements JobService{
 		this.jobDao.save(job);
 		return new SuccessResult("Eklendi");
 	}
+
+	@Override
+	public DataResult<List<JobList>> getByIsActivated() {
+		List<Job> job = this.jobDao.getByIsActivated(true);
+		return new SuccessDataResult<List<JobList>>(jobResult(job));
+	}
+
+	@Override
+	public DataResult<List<JobList>> findByIsActivatedOrderByReleaseDateDesc() {
+		List<Job> job = this.jobDao.findByIsActivatedOrderByReleaseDateDesc(true);
+		return new SuccessDataResult<List<JobList>>(jobResult(job));
+	}
+
 	
+	@Override
+	public DataResult<List<JobList>> getByEmployerId(int id) {
+		List<Job> job = this.jobDao.getByEmployerId_Id(id);
+		
+		
+		return new SuccessDataResult<List<JobList>>(jobResult(job),"Firmaya ait ilanlar listelendi");
+	}
+	
+	private List<JobList> jobResult(List<Job> job2) {
+		List<JobList> list = new ArrayList<JobList>();
+		
+		for (Job job3 : job2) {
+			JobList j = new JobList();
+			j.setCompanyName(job3.getEmployerId().getCompanyName());
+			j.setPosition(job3.getPosition());
+			j.setAvaiblePositionNumber(job3.getAvaibleNumber());
+			j.setReleaseDate(job3.getReleaseDate());
+			j.setApplicationDeadline(job3.getApplicationDeadlinee());
+			list.add(j);
+
+			
+		}
+		return list;
+	}
 	
 }

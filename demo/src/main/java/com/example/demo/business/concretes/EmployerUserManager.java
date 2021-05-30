@@ -13,16 +13,20 @@ import com.example.demo.core.utilities.results.Result;
 import com.example.demo.core.utilities.results.SuccessDataResult;
 import com.example.demo.core.utilities.results.SuccessResult;
 import com.example.demo.dataAccess.abstracts.EmployerUserDao;
+import com.example.demo.dataAccess.abstracts.JobDao;
 import com.example.demo.entities.concretes.EmployerUser;
+import com.example.demo.entities.concretes.Job;
 @Service
 public class EmployerUserManager implements EmployerUserService{
 	private EmployerUserDao employerUserDao;
 	private RegisterCheck registerCheck;
+	private JobDao jobDao;
 	@Autowired
-	public EmployerUserManager(EmployerUserDao employerUserDao,RegisterCheck registerCheck) {
+	public EmployerUserManager(JobDao jobDao, EmployerUserDao employerUserDao,RegisterCheck registerCheck) {
 		super();
 		this.employerUserDao = employerUserDao;
 		this.registerCheck = registerCheck;
+		this.jobDao = jobDao;
 	}
 
 	@Override
@@ -48,5 +52,28 @@ public class EmployerUserManager implements EmployerUserService{
 		// TODO Auto-generated method stub
 		return new SuccessDataResult<List<EmployerUser>>(this.employerUserDao.findAll(),"Listelendi");
 	}
+
+	@Override
+	public Result addJobAd(Job job) {
+		
+		this.jobDao.save(job);
+		return new SuccessResult();
+	}
+
+	@Override
+	public Result changeJobActivite(int id) {
+		Job job = this.jobDao.getById(id);
+		if(job.isActivated()==true) {
+			job.setActivated(false);
+			this.jobDao.save(job);
+			return new SuccessResult("ilan pasife çekildi.");
+		}else {
+			job.setActivated(true);
+			this.jobDao.save(job);
+			return new SuccessResult("ilan aktife çekildi");
+		}
+		
+	}
+	
 
 }

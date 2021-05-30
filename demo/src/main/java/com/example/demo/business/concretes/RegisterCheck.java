@@ -11,23 +11,26 @@ import com.example.demo.core.utilities.results.ErrorResult;
 import com.example.demo.core.utilities.results.SuccessResult;
 import com.example.demo.dataAccess.abstracts.CandidateUserDao;
 import com.example.demo.dataAccess.abstracts.EmployerUserDao;
+import com.example.demo.dataAccess.abstracts.UserDao;
 import com.example.demo.entities.concretes.CandidateUser;
 import com.example.demo.entities.concretes.EmployerUser;
 import com.example.demo.entities.concretes.StaffUser;
+import com.example.demo.entities.concretes.User;
 @Component
 public class RegisterCheck {
 	
 	private CandidateUserDao candidateUserDao;
 	@SuppressWarnings("unused")
 	private EmployerUserDao employerUserDao;
+	private UserDao userDao;
 
 	
 	@Autowired
-	public RegisterCheck(CandidateUserDao candidateUserDao, EmployerUserDao employerUserDao) {
+	public RegisterCheck(UserDao userDao, CandidateUserDao candidateUserDao, EmployerUserDao employerUserDao) {
 		super();
 		this.candidateUserDao = candidateUserDao;
 		this.employerUserDao = employerUserDao;
-
+		this.userDao = userDao;
 	}
 
 
@@ -84,21 +87,34 @@ public class RegisterCheck {
 		
 		return null;
 	}*/
-	public boolean isEmailUsedCheck(CandidateUser user) {
-		List<CandidateUser> candidateUser = this.candidateUserDao.findAll();
-		for (CandidateUser candidateUser2 : candidateUser) {
-			if(candidateUser2.getEmail().equals(user.getEmail())) {
-				return false;
-			}
+//	public boolean isEmailUsedCheck(CandidateUser user) {
+//		List<CandidateUser> candidateUser = this.candidateUserDao.findAll();
+//		for (CandidateUser candidateUser2 : candidateUser) {
+//			if(candidateUser2.getEmail().equals(user.getEmail())) {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
+//	public boolean isIdentityNumberUsedCheck(CandidateUser user) {
+//		List<CandidateUser> candidateUser = this.candidateUserDao.findAll();
+//		for (CandidateUser candidateUser2 : candidateUser) {
+//			if(candidateUser2.getIdentityNumber().equals(user.getIdentityNumber())) {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
+	public boolean isIdentityNumberUsedCheck(CandidateUser user) {
+		if(this.candidateUserDao.getByIdentityNumber(user.getIdentityNumber())!=null) {
+			return false;
 		}
 		return true;
 	}
-	public boolean isIdentityNumberUsedCheck(CandidateUser user) {
-		List<CandidateUser> candidateUser = this.candidateUserDao.findAll();
-		for (CandidateUser candidateUser2 : candidateUser) {
-			if(candidateUser2.getIdentityNumber().equals(user.getIdentityNumber())) {
-				return false;
-			}
+	
+	public boolean isEmailUsedCheck(User user) {
+		if(this.userDao.getByEmail(user.getEmail())!=null) {
+			return false;
 		}
 		return true;
 	}

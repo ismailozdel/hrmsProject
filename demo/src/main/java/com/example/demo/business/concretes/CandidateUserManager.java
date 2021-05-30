@@ -46,5 +46,9 @@ public class CandidateUserManager implements CandidateUserService{
 		
 		return new SuccessDataResult<List<CandidateUser>>(this.userDao.findAll(),"Listelendi");
 	}
+	@Override
+	public DataResult<CandidateUser> getByIdentityNumber(String identityNumber) {
+		return new SuccessDataResult<CandidateUser>(this.userDao.getByIdentityNumber(identityNumber));
+	}
 
 }

@@ -1,6 +1,10 @@
 package com.example.demo.entities.concretes;
 
+import java.util.List;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +17,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="employers_users")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","job"})
 public class EmployerUser extends User{
+	@Id
+	@Column(name="id")
+	private int id;
+	
+	
 	@Column(name="company_name")
 	private String companyName;
 	
@@ -22,4 +32,7 @@ public class EmployerUser extends User{
 	
 	@Column(name="phone")
 	private String phoneNumber;
+	
+	@OneToMany(mappedBy="employerId")
+	private List<Job> job;
 }

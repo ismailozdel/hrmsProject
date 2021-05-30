@@ -1,6 +1,10 @@
 package com.example.demo.entities.concretes;
 
+import java.util.List;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +16,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="candidate_users")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","users"})
 public class CandidateUser extends User{
+	@Id
+	@Column(name="id")
+	private int id;
+	
 	@Column(name="name")
 	private String firstName;
 	
@@ -24,4 +33,5 @@ public class CandidateUser extends User{
 	
 	@Column(name="birth_year")
 	private String birthYear;
+	
 }

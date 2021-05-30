@@ -9,4 +9,5 @@ import com.example.demo.entities.concretes.CandidateUser;
 public interface CandidateUserService{
 	Result add(CandidateUser user);
 	DataResult<List<CandidateUser>> getAll();
+	DataResult<CandidateUser> getByIdentityNumber(String identityNumber);
 }
