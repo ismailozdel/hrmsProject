@@ -17,6 +17,7 @@ import com.example.demo.core.utilities.results.SuccessResult;
 import com.example.demo.dataAccess.abstracts.JobDao;
 import com.example.demo.entities.concretes.Job;
 import com.example.demo.entities.concretes.JobList;
+import com.example.demo.entities.dtos.JobDto;
 @Service
 public class JobManager implements JobService{
 	private JobDao jobDao;
@@ -84,5 +85,6 @@ public class JobManager implements JobService{
 		}
 		return list;
 	}
-	
+
+
 }

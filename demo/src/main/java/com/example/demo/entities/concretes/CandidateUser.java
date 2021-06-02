@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="candidate_users")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","users"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","employeeCv"})
+
 public class CandidateUser extends User{
 	@Id
 	@Column(name="id")
@@ -34,4 +35,6 @@ public class CandidateUser extends User{
 	@Column(name="birth_year")
 	private String birthYear;
 	
+	@OneToOne(mappedBy = "candidateUser")
+	private EmployeeCv employeeCv;
 }

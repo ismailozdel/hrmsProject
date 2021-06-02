@@ -16,6 +16,7 @@ import com.example.demo.core.utilities.results.Result;
 import com.example.demo.core.utilities.results.SuccessDataResult;
 import com.example.demo.entities.concretes.Job;
 import com.example.demo.entities.concretes.JobList;
+import com.example.demo.entities.dtos.JobDto;
 
 @RestController
 @RequestMapping("/api/job")
@@ -47,5 +48,5 @@ public class JobController {
 	public DataResult<List<JobList>> getByEmployerId(@RequestParam int id){
 		return this.jobService.getByEmployerId(id);
 	}
-	
+
 }

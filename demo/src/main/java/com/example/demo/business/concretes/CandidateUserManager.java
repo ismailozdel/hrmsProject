@@ -12,16 +12,21 @@ import com.example.demo.core.utilities.results.Result;
 import com.example.demo.core.utilities.results.SuccessDataResult;
 import com.example.demo.core.utilities.results.SuccessResult;
 import com.example.demo.dataAccess.abstracts.CandidateUserDao;
+import com.example.demo.dataAccess.abstracts.EmployeeCvDao;
 import com.example.demo.entities.concretes.CandidateUser;
+import com.example.demo.entities.concretes.EmployeeCv;
+import com.example.demo.entities.concretes.SchoolList;
 @Service
 public class CandidateUserManager implements CandidateUserService{
 	private CandidateUserDao userDao;
 	private RegisterCheck registerCheck;
+	private EmployeeCvDao employeeCvDao;
 	@Autowired
-	public CandidateUserManager(CandidateUserDao userDao, RegisterCheck registerCheck) {
+	public CandidateUserManager(CandidateUserDao userDao, RegisterCheck registerCheck, EmployeeCvDao employeeCvDao) {
 		super();
 		this.userDao = userDao;
 		this.registerCheck = registerCheck;
+		this.employeeCvDao = employeeCvDao;
 	}
 	@Override
 	public Result add(CandidateUser user) {
@@ -49,6 +54,16 @@ public class CandidateUserManager implements CandidateUserService{
 	@Override
 	public DataResult<CandidateUser> getByIdentityNumber(String identityNumber) {
 		return new SuccessDataResult<CandidateUser>(this.userDao.getByIdentityNumber(identityNumber));
+	}
+	@Override
+	public DataResult<EmployeeCv> getEmployeeCv(int id) {
+		// TODO Auto-generated method stub
+		return new SuccessDataResult<EmployeeCv>(this.employeeCvDao.getByCandidateUser_Id(id));
+	}
+	@Override
+	public DataResult<SchoolList> getSchoolSort(int id) {
+		
+		return null;
 	}
 
 }
